@@ -6,14 +6,12 @@ import com.nestdigital.companybackend.Model.SecurityModel;
 import com.nestdigital.companybackend.dao.EmployDao;
 import com.nestdigital.companybackend.dao.SecurityDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RestController
 public class SecurityController {
@@ -21,7 +19,7 @@ public class SecurityController {
     private SecurityDao dao;
 
     @CrossOrigin(value = "*")
-    @PostMapping("/")
+    @PostMapping("/addSecurity")
     public String addSecurity(@RequestBody SecurityModel security){
         DateTimeFormatter dt=DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime now= LocalDateTime.now();
@@ -38,6 +36,30 @@ public class SecurityController {
 
         dao.deleteSecurityById(security.getId());
         return "{status:success}";
+    }
+
+    @CrossOrigin(value = "*")
+    @GetMapping("/viewSecurity")
+    public List<SecurityModel> viewSecurity(){
+        return (List<SecurityModel>) dao.findAll();
+    }
+    @CrossOrigin(value = "*")
+    @PostMapping("/searchSecurity")
+    public List<SecurityModel> searchSecurity(@RequestBody SecurityModel security){
+        return (List<SecurityModel>) dao.searchSecurity(security.getName());
+    }
+
+    @CrossOrigin(value = "*")
+    @PostMapping("/authSecurity")
+    public List<SecurityModel> authSecurity(@RequestBody SecurityModel security){
+        return (List<SecurityModel>) dao.authSecurity(security.getEmail(),security.getPassword());
+    }
+    @Transactional
+    @CrossOrigin(value = "*")
+    @PostMapping("/updateSecurity")
+    public String updateSecurity(@RequestBody SecurityModel security){
+        dao.updateSecurityById(security.getAddress(),security.getAge(),security.getEmail(),security.getName(),security.getPassword(),security.getSalary(),security.getPhone(),security.getId());
+        return "Successfully Updated";
     }
 
 }

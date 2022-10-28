@@ -21,7 +21,9 @@ public class LeaveModel {
     @Id
     @GeneratedValue
     private int id;
+    private String type;
     private int emp_id;
+    private String description;
     private String applyDate;
     private String leaveDate;
     private int Status;
