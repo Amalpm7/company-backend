@@ -4,10 +4,7 @@ package com.nestdigital.companybackend.controller;
 import com.nestdigital.companybackend.Model.LogModel;
 import com.nestdigital.companybackend.dao.LogDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -41,7 +38,7 @@ public class LogController {
         return "Log Success";
     }
     @CrossOrigin(originPatterns = "*")
-    @PostMapping("/viewAllLog")
+    @GetMapping("/viewAllLog")
     public List<Map<String,String>> viewAllLog(){
         return (List<Map<String, String>>) dao.viewAllLogs();
     }
@@ -51,4 +48,10 @@ public class LogController {
     public List<Map<String,String>> viewLogById(@RequestBody LogModel logModel){
         return (List<Map<String, String>>) dao.viewLogByEmpId(logModel.getEmp_id());
     }
+    @CrossOrigin(originPatterns = "*")
+    @GetMapping("/viewCheckin")
+    public List<LogModel> viewCheckin(){
+        return (List<LogModel>) dao.viewCheckIn();
+    }
+
 }

@@ -51,12 +51,12 @@ public class EmployController {
     public List<EmployModel> authEmployee(@RequestBody EmployModel employModel){
         return (List<EmployModel>) employeeDao.authEmployee(employModel.getEmail(),employModel.getPassword());
     }
-    @Transactional
-    @CrossOrigin(value = "*")
-    @PostMapping("/updateEmp")
-    public String updateEmployee(@RequestBody EmployModel employModel){
-        employeeDao.updateEmployeeById(employModel.getAddress(),employModel.getAge(),employModel.getEmail(),employModel.getName(),employModel.getPassword(),employModel.getSalary(),employModel.getPhone(),employModel.getId());
-        return "Successfully Updated";
-    }
+        @Transactional
+        @CrossOrigin(value = "*")
+        @PostMapping("/updateEmp")
+        public String updateEmployee(@RequestBody EmployModel employModel){
+            employeeDao.updateEmployeeById(employModel.getAddress(),employModel.getAge(),employModel.getEmail(),employModel.getName(),employModel.getPassword(),employModel.getSalary(),employModel.getPhone(),employModel.getId());
+            return "Successfully Updated";
+        }
 
 }
